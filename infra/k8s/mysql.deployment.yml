@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-mysql
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: mysql:5.7
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "400m"
+        args:
+          - "--ignore-db-dir=lost+found"
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-info
+              key: root-password
+
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-info
+              key: user
+
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-info
+              key: password
+
+        - name: MYSQL_DATABASE
+          value: hurb_test_assignment
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent
+          mountPath: /var/lib/mysql
+        - mountPath: /docker-entrypoint-initdb.d
+          name: mysql-schema
+      volumes:
+      - name: mysql-persistent
+        persistentVolumeClaim:
+          claimName: mysql-pvc
+      - name: mysql-schema
+        configMap:
+          name: configmap-mysql
+          items:
+            - key: mysql-schema.sql
+              path: mysql-schema.sql

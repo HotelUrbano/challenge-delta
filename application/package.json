@@ -1,0 +1,20 @@
+{
+  "name": "challenge-delta",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/CRFLuiz/challenge-delta",
+  "author": "CRF Luiz <lcmartinscjr@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon",
+    "start": "node index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5"
+  }
+}

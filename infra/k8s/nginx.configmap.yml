@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-nginx
+  labels:
+    app: nginx
+    type: configmap
+data:
+  nginx.conf: |
+
+    server {
+      listen 80;
+      
+      location / {
+        proxy_pass http://service-nodeapp:3000;
+      }
+    }

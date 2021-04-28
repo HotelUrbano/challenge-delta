@@ -1,0 +1,10 @@
+{
+	"auths": {
+		"00000000000.dkr.ecr.us-east-1.amazonaws.com": {
+			"auth": "AWS_ECR_TOKEN"
+		},
+		"https://index.docker.io/v1/": {
+			"auth": "DOCKER_HUB_TOKEN"
+		}
+	}
+}

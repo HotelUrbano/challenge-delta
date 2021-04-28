@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-nodeapp
+  labels:
+    app: nodeapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodeapp
+  template:
+    metadata:
+      labels:
+        app: nodeapp
+    spec:
+      containers:
+      - image: crfluiz/challenge-delta:latest
+        name: node-app
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+          name: webinterface
+        resources:
+          requests:
+            memory: "300Mi"
+            cpu: "500m"
